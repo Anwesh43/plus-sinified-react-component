@@ -1,24 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import PlusLine from './PlusLine'
+import Button from './Button'
+import {useAnimatedScale, useDimension} from './hooks'
+import {sinify} from './utils'
 function App() {
+  const {scale, start} = useAnimatedScale(0.02 / 4, 20)
+  const {w, h, resize, disableResize} = useDimension()
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {[0, 1].map(i => <PlusLine w = {w} h = {h} scale = {sinify(scale)} i = {i} n = {4}/>)}
+      <Button w = {w} h = {h} onClick = {start}></Button>
     </div>
   );
 }

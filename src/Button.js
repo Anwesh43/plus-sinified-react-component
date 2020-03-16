@@ -1,3 +1,4 @@
+import React from 'react'
 const btnStyle = (w, h) => {
     const position = 'absolute'
     const top = `${0.1 * h}px`

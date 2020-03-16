@@ -1,21 +1,28 @@
 import {divideScale} from './utils'
+import React from 'react'
 
-const sizeFactor = 9
+const sizeFactor = 3
 const strokeWidthFactor = 60
 const background = '#3F51B5'
 
+
 const getPlusLineStyle = (scale, i, n, w, h) => {
     const size = Math.min(w, h) / sizeFactor
+    const strokeWidth = Math.min(w, h) / strokeWidthFactor
     const sc1 = divideScale(scale, i, n)
     const sc2 = divideScale(scale, i + 2, n)
-    const left = `${w / 2 - size * sc2}px`
-    const strokeWidth = Math.min(w, h) / strokeWidthFactors
-    const height = `${strokeWidth}px`
-    const top = `${h / 2 - strokeWidth / 2}px`
+    const wDynamic = (size * sc1 + size * sc2) * (1 - i) + i * strokeWidth
+    const xDynamic = (size * sc2) * (1 - i) + i * (strokeWidth / 2)
+    const hDynamic = (size * sc1 + size * sc2) * (i) + (1 - i) * strokeWidth
+    const yDynamic = (size * sc2) * i + i * (strokeWidth / 2) * (1 - i)
+    const left = `${w / 2 - xDynamic}px`
+    const height = `${hDynamic}px`
+    const top = `${h / 2 - yDynamic}px`
     const position = 'absolute'
-    const width = `${size * sc1 + size * sc2}px`
-    const WebkitTransform = `rotate(${90 * i}deg)`
-    return {position, width, height, top, left, WebkitTransform, background}
+    const width = `${wDynamic}px`
+    console.log(scale)
+    //const WebkitTransform = `rotate(${90 * i}deg)`
+    return {position, width, height, top, left, background}
 }
 
 const PlusLine = ({scale, i, n, w, h}) => {
